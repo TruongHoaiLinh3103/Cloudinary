@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudinary</title>
+    <link href="./css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <h1 id="cloudinary-node-sdk">Cloudinary Node SDK</h1>
+    <h2 id="about">About</h2>
+    <p>The Cloudinary Node SDK allows you to quickly and easily integrate your application with Cloudinary.
+    Effortlessly optimize, transform, upload and manage your cloud&#39;s assets.
+    </p>
+    <h4 id="note">Note</h4>
+    <p>This Readme provides basic installation and usage information. 
+    For the complete documentation, see the <a href="https://cloudinary.com/documentation/node_integration">Node SDK Guide</a>.
+    </p>
+    <h2 id="table-of-contents">Table of Contents</h2>
+    <ul>
+    <li><a href="#version-support">Version Support</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#quick_example_transformations">Quick example: Transformations</a></li>
+    <li><a href="#quick_example_file_upload">Quick example: File upload</a></li>
+    <li><a href="#quick_example_multer">Quick example: Multer</a></li>
+    </ul>
+    <h2 id="version-support">Version Support</h2>
+    <div class="box-x">
+        <table>
+            <thead>
+                <tr>
+                    <th>SDK Version</th>
+                    <th>Node version</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.x.x</td>
+                    <td>Node@6 &amp; up</td>
+                </tr>
+                <tr>
+                    <td>2.x.x</td>
+                    <td>Node@9 &amp; up</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h2 id="installation">Installation</h2>
+    <pre class="box-x"><code class="language-bash">npm install cloudinary
+    </code></pre>
+    <h1 id="usage">Usage</h1>
+    <h3 id="setup">Setup</h3>
+    <pre class="box-x"><code class="language-js">// Require the Cloudinary library
+    const cloudinary = require(&#39;cloudinary&#39;).v2
+    </code></pre>
+    <h3 id="transform-and-optimize-assets">Transform and Optimize Assets</h3>
+    <pre class="box-x"><code class="language-js">cloudinary.url(&quot;sample.jpg&quot;, {width: 100, height: 150, crop: &quot;fill&quot;, fetch_format: &quot;auto&quot;})
+    </code></pre>
+    <h3 id="upload">Upload</h3>
+    <pre class="box-x"><code class="language-js">cloudinary.v2.uploader.upload(&quot;/home/my_image.jpg&quot;, {upload_preset: &quot;my_preset&quot;}, (error, result)=&gt;{
+    console.log(result, error);
+    });
+    </code></pre>
+    <h3 id="largechunked-upload">Large/Chunked Upload</h3>
+    <pre class="box-x"><code class="language-js">   cloudinary.v2.uploader.upload_large(LARGE_RAW_FILE, {
+            chunk_size: 7000000
+            }, (error, result) =&gt; {console.log(error)});
+    </code></pre>
+    <h2 id="quick_example_transformations">Quick example: Transformations</h2>
+    <p>Take a look at the following transformation code and the image it delivers:</p>
+    <pre class="box-x"><code>
+        cloudinary.image("front_face.png", {transformation: [
+            {gravity: "face", height: 150, width: 150, crop: "thumb"},
+            {radius: 20},
+            {effect: "sepia"},
+            {overlay: "cloudinary_icon"},
+            {effect: "brightness:90"},
+            {opacity: 60},
+            {width: 50, crop: "scale"},
+            {flags: "layer_apply", gravity: "south_east", x: 5, y: 5},
+            {angle: 10}
+        ]})
+    </code></pre>
+    <h2>Quick example: File upload</h2>
+    <p>The following Node.js code uploads the <code>dog.mp4</code> video using the public_id, <code>my_dog</code>. The video will overwrite the existing <code>my_dog</code> video if it exists. When the video upload is complete, the specified notification URL will receive details about the uploaded media asset.</p>
+    <pre class="box-x"><code>
+        cloudinary.v2.uploader
+        .upload("dog.mp4", 
+            {resource_type: "video", public_id: "my_dog",
+            overwrite: true, notification_url: "https://mysite.example.com/notify_endpoint"})
+        .then(result=>console.log(result));
+        or
+        const image = await cloudinary.uploader.upload(img,
+            { 
+                upload_preset: 'cluekvnq',
+                allowed_formats : ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
+            }, 
+        );
+    </code></pre>
+    <h2 id="quick_example_multer">Quick example: Multer</h2>
+    <pre class="box-x"><code>
+        const cloudinary = require('cloudinary').v2;
+        const { CloudinaryStorage } = require('multer-storage-cloudinary');
+        const multer = require('multer');
+        require('dotenv').config()
+
+        cloudinary.config({
+            cloud_name: process.env.CLOUDINARY_NAME,
+            api_key: process.env.CLOUDINARY_KEY,
+            api_secret: process.env.CLOUDINARY_SECRET
+        });
+
+        const storage = new CloudinaryStorage({
+            cloudinary,
+            allowedFormats: ['jpg', 'png'],
+            params: {
+                folder: "Lisoh Anikey"
+            }
+        });
+
+        const uploadCloud = multer({ storage });
+
+        module.exports = uploadCloud;
+    </code></pre>
+</body>
+</html>
