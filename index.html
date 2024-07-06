@@ -52,7 +52,7 @@
     <h1 id="usage">Usage</h1>
     <h3 id="setup">Setup</h3>
     <pre class="box-x"><code class="language-js">// Require the Cloudinary library
-    const cloudinary = require(&#39;cloudinary&#39;).v2
+const cloudinary = require(&#39;cloudinary&#39;).v2
     </code></pre>
     <h3 id="transform-and-optimize-assets">Transform and Optimize Assets</h3>
     <pre class="box-x"><code class="language-js">cloudinary.url(&quot;sample.jpg&quot;, {width: 100, height: 150, crop: &quot;fill&quot;, fetch_format: &quot;auto&quot;})
@@ -60,12 +60,12 @@
     <h3 id="upload">Upload</h3>
     <pre class="box-x"><code class="language-js">cloudinary.v2.uploader.upload(&quot;/home/my_image.jpg&quot;, {upload_preset: &quot;my_preset&quot;}, (error, result)=&gt;{
     console.log(result, error);
-    });
+});
     </code></pre>
     <h3 id="largechunked-upload">Large/Chunked Upload</h3>
-    <pre class="box-x"><code class="language-js">   cloudinary.v2.uploader.upload_large(LARGE_RAW_FILE, {
-            chunk_size: 7000000
-            }, (error, result) =&gt; {console.log(error)});
+    <pre class="box-x"><code class="language-js">cloudinary.v2.uploader.upload_large(LARGE_RAW_FILE, {
+chunk_size: 7000000
+}, (error, result) =&gt; {console.log(error)});
     </code></pre>
     <h2 id="quick_example_transformations">Quick example: Transformations</h2>
     <p>Take a look at the following transformation code and the image it delivers:</p>
